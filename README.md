@@ -125,6 +125,148 @@ text = ocr.ocr(device.image)
 print(f'Recognized: {text}')
 ```
 
+## MCP Server (AI Control) 🤖
+
+**NEW**: Control your Android device using AI assistants like Claude Desktop!
+
+Mobile-Use now includes a **Model Context Protocol (MCP)** server that allows AI assistants to directly control Android devices through natural language.
+
+### What is MCP?
+
+MCP (Model Context Protocol) is Anthropic's protocol that lets AI assistants like Claude connect to external tools. With MCP, you can tell Claude in natural language what you want to do, and it will control your Android device automatically.
+
+### Quick Start with MCP
+
+#### 1. Install MCP Package
+
+```bash
+pip install mcp
+```
+
+#### 2. Choose Your Mode
+
+| Mode | Best For | Documentation |
+|------|----------|---------------|
+| **stdio** (Recommended) | Local single-user with Claude Desktop | [Quick Start](./MCP_QUICKSTART.md) |
+| **HTTP** | Remote access, multiple clients, API integration | [HTTP Guide](./MCP_HTTP.md) |
+
+#### 3. Test the Server
+
+**stdio mode:**
+```bash
+python3 test_mcp_server.py
+```
+
+**HTTP mode:**
+```bash
+./start_mcp_http.sh
+# Server runs on http://localhost:8000
+```
+
+#### 4. Configure Claude Desktop
+
+**stdio mode** - Edit `~/Library/Application Support/Claude/claude_desktop_config.json`:
+
+```json
+{
+  "mcpServers": {
+    "mobile-use": {
+      "command": "bash",
+      "args": ["/absolute/path/to/mobile-use/start_mcp_server.sh"]
+    }
+  }
+}
+```
+
+**HTTP mode:**
+
+```json
+{
+  "mcpServers": {
+    "mobile-use-http": {
+      "url": "http://localhost:8000/sse"
+    }
+  }
+}
+```
+
+### Available MCP Tools
+
+The MCP server provides 11 tools for controlling Android devices:
+
+| Category | Tools | Description |
+|----------|-------|-------------|
+| **Device** | `connect_device` | Connect to Android device |
+| | `get_screen_info` | Get screen dimensions |
+| **Screenshot** | `screenshot` | Capture screen |
+| **Interaction** | `click` | Tap at coordinates |
+| | `long_click` | Long press |
+| | `swipe` | Swipe gesture |
+| | `drag` | Drag element |
+| **OCR** | `ocr_text` | Recognize text on screen |
+| | `ocr_find_text` | Find text location |
+| | `ocr_click_text` | Find and click text |
+| **Detection** | `check_button` | Check if button appears |
+
+### Usage Examples
+
+Once configured, you can control your device using natural language in Claude Desktop:
+
+**Take a screenshot and analyze:**
+```
+Please take a screenshot and tell me what's on the screen
+```
+
+**Find and click text:**
+```
+Please find the "Settings" text and click it
+```
+
+**Automate a task:**
+```
+Please do the following:
+1. Take a screenshot
+2. Find and click "Search"
+3. Swipe up from bottom to top
+4. Check if there's a red button at (100, 200, 300, 400)
+```
+
+**OCR and interact:**
+```
+Please use OCR to find all text on screen, then click on "Confirm" if it exists
+```
+
+### MCP Documentation
+
+- 📖 **[Quick Start Guide](./MCP_QUICKSTART.md)** - 5-minute setup
+- 📕 **[Complete Documentation](./MCP_README.md)** - All tools and features
+- 🌐 **[HTTP Mode Guide](./MCP_HTTP.md)** - Remote access and deployment
+- ⚙️ **[Implementation Details](./MCP_IMPLEMENTATION.md)** - Technical architecture
+- 📁 **[File Structure](./MCP_FILES.md)** - All MCP files explained
+
+### MCP Features
+
+✅ **Natural Language Control** - Tell Claude what you want, it handles the details
+✅ **11 Powerful Tools** - Screenshot, click, swipe, OCR, and more
+✅ **Two Modes** - stdio (local) or HTTP (remote/multi-client)
+✅ **Smart OCR** - Find and click text automatically
+✅ **Multi-Client Support** - HTTP mode supports multiple connections
+✅ **Well Documented** - Comprehensive guides and examples
+
+### MCP vs Direct Python API
+
+| Feature | Direct Python API | MCP Server |
+|---------|-------------------|------------|
+| **Control Method** | Write Python code | Natural language |
+| **Learning Curve** | Need to learn API | Just describe what you want |
+| **Flexibility** | Full programmatic control | AI interprets intent |
+| **Use Case** | Automation scripts | Interactive exploration |
+| **Best For** | Developers | Everyone |
+
+Both methods are supported - use whichever fits your needs!
+
+---
+
 ## Examples
 
 ### Basic Test

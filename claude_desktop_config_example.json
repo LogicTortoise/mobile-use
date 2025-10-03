@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "mobile-use": {
+      "command": "bash",
+      "args": [
+        "/Users/Hht/Documents/10.github/mobile-use/start_mcp_server.sh"
+      ]
+    }
+  }
+}

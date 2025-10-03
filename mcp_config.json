@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "mobile-use": {
+      "command": "python3",
+      "args": [
+        "/Users/Hht/Documents/10.github/mobile-use/mcp_server.py"
+      ],
+      "env": {
+        "PYTHONPATH": "/Users/Hht/Documents/10.github/mobile-use"
+      }
+    }
+  }
+}
